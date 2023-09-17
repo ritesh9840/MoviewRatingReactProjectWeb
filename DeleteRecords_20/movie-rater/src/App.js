@@ -47,15 +47,40 @@ const editClicked=movie=>{
     setMovies(newMovies);
   }
 
+  const newMovie= ()=>{
+    setEditedMovie({title:'',description:'' });
+    setSelectedMovie(null);
+
+  }
+
+  const movieCreated= movie =>{
+    const newMovies=[...movies,movie];
+    setMovies(newMovies)
+
+  }
+  const removeClicked=move=>{
+    const newMovies= movies.filter(mov => mov.id !== move.id)
+    setMovies(newMovies)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
          <h1> Moview Rater</h1>
       </header>
       <div className="layout">
-           <MovieList movies={movies} movieClicked={loadMovie} editClicked={editClicked}/>
+           <div>
+           <MovieList 
+           movies={movies} 
+           movieClicked={loadMovie} 
+           editClicked={editClicked}
+            removeClicked={removeClicked}
+           />
+           <button onClick={newMovie}>New Movie</button>
+         </div>
            <MovieDetails movie={selectedMovie} updateMovie={loadMovie}/>
-        {editedMovie ? <MovieForm movie={editedMovie} upDatedMovie={upDatedMovie}/>: null}
+        {editedMovie ? 
+          <MovieForm movie={editedMovie} upDatedMovie={upDatedMovie} movieCreated={movieCreated}/>: null}
          </div>
     </div>
   );
